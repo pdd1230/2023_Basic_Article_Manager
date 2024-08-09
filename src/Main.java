@@ -14,10 +14,6 @@ public class Main {
 		System.out.println("== 프로그램 끝 ==");
 		
 		sc.close(); 
-		
-		//test 주석   
-		
-		
-		
+
 	}
 }
