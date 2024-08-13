@@ -5,14 +5,26 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
+
+	static List<Article> articles;   // static 변수는 클래스에서 1개만 사용합니다.
+	
+	static {
+		articles = new ArrayList<>();   // articles 초기화
+		
+	}
+	
+	
 	public static void main(String[] args) {
 		System.out.println("== 프로그램 시작 ==");
+		
+		makeTestData();    // ★★ 메소드 또는 클래스 찾아가기 단축키 ==> f3
+						   // 다음 오류 부분으로 바로가기 단축키 :  ctrl + . 
+//		new Main().makeTestData();
 
 		Scanner sc = new Scanner(System.in);
 
-		int lastArticleId = 0;
+		int lastArticleId = 3;
 
-		List<Article> articles = new ArrayList<>();
 		
 		while (true) {
 
@@ -35,6 +47,7 @@ public class Main {
 				System.out.printf("내용 : ");
 				String body = sc.nextLine();
 
+//				Article article = new Article(id, regDate, title, body, 0);  4번째 조회수 매개변수를 0으로 지정해도 됨
 				Article article = new Article(id, regDate, title, body);
 				
 				articles.add(article);
@@ -151,6 +164,15 @@ public class Main {
 		sc.close();
 
 	}
+
+	private static void makeTestData() {   //main() 가 static 메서드입니다. 기본적으로 메소드 만들때 static으로 만듬
+
+		System.out.println("게시물 테스트 데이터를 생성합니다");
+		articles.add(new Article(1,Util.getDate(),"제목1","내용1",10));
+		articles.add(new Article(2,Util.getDate(),"제목2","내용2",20));
+		articles.add(new Article(3,Util.getDate(),"제목3","내용3",30));
+	}
+
 }
 
 class Article {
@@ -160,13 +182,19 @@ class Article {
 	String body;
 	int viewCnt;
 	
-	Article(int id, String regDate, String title, String body){
+	Article(int id, String regDate, String title, String body) {
+		this(id, regDate, title, body, 0);    //this() 사용 의미, 매개변수 5개짜리 생성자를 이용함  , 오버로딩입니다
+	}
+	
+	Article(int id, String regDate, String title, String body,int viewCnt){
 		this.id = id;
 		this.regDate = regDate;
 		this.title = title;
 		this.body = body;
-		this.viewCnt= 0;
+		this.viewCnt= viewCnt;
 	}
+
+
 
 	public void addViewCnt() {
 
